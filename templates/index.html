@@ -1,0 +1,57 @@
+<html>
+<head>
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
+    <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+    <script src="http://maps.google.com/maps/api/js?v=3&sensor=false"></script>
+    <script src="lib/leaflet-plugins/layer/tile/Google.js"></script>
+</head>
+<body>
+    <div id="map" style="width: 600px; height: 400px; position:relative"></div>
+    <script>
+
+var map = L.map('map').setView([39.74739, -90], 4);
+
+var mapbox = L.tileLayer('http://{s}.tiles.mapbox.com/v3/fenris.kdh92755/{z}/{x}/{y}.png', {
+    attribution: 'Map data &copy; [...]',
+    maxZoom: 18
+});
+
+mapbox.addTo(map);
+
+var ggl = new L.Google();
+var ggl2 = new L.Google('TERRAIN');
+var ggl3 = new L.Google('ROADMAP')
+var ggl4 = new L.Google('HYBRID');
+
+//ggl4.addTo(map);
+
+var baseMaps = {
+    'MapBox': mapbox,
+    'Google Satellite': ggl,
+    'Google Terrain': ggl2,
+    'Google Roads': ggl3,
+    'Google Hybrid': ggl4
+}
+
+function popUp(feature, layer) {
+	layer.bindPopup('<b>' + feature.properties.name + '</b> ' + feature.properties.status + '<br />' + feature.properties.location);
+}
+
+var geojsonFeatures = {{ j_geojson }};
+L.geoJson(geojsonFeatures, {
+    onEachFeature: popUp
+}).addTo(map);
+
+
+//var geojsonLayer = new L.GeoJSON.AJAX("prospects.json", {onEachFeature:popUp});
+//geojsonLayer.addTo(map);
+
+var layers = {
+    //'Prospects': geojsonLayer,
+}
+
+map.addControl(new L.Control.Layers( baseMaps, layers));
+
+    </script>
+</body>
+</html>
