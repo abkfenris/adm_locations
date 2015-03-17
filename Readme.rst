@@ -18,8 +18,10 @@ and in the default order |image3|
 5. Then within your terminal run
 ``./csv_to_json.py filename.csv`` using the filename that you just saved
 it as. |image5|
-6. The script will give an estimated time to completion, and display which people it failed to find a location for. |image6|
-7. On a Mac it will try to open a browser window with the page, otherwise open ``index.html`` to view the locations. |image7|
+6. The script will give an estimated time to completion, and display which
+people it failed to find a location for. |image6|
+7. It will try to open a browser window with the page, otherwise open
+``index.html`` to view the locations. |image7|
 
 .. |image0| image:: img/proof-admissions-prospects--ba-filemaker-.png
 .. |image1| image:: img/proof-admissions-prospects--ba-filemaker-1.png
