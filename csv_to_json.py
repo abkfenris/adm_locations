@@ -35,7 +35,7 @@ def convert(f):
     with click.progressbar(reader, length=countrows, label='Finding locations') as bar:
         for row in bar:
             name = row[5]
-            status = row[10]
+            status = row[0]
             town = row[6]
             state = row[7]
             try:
@@ -50,6 +50,7 @@ def convert(f):
         for fail in failures:
             click.echo('  ' + fail)
         click.echo('')
+        time.sleep(3)
 
     # create a geojson feature collection
     fc = geojson.FeatureCollection(features)
