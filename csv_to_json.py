@@ -84,7 +84,11 @@ def convert(f):
             for col in cols:
                 click.echo('  {col}: {value}'.format(col=col, value=row[col]))
 
-
+    data_cols = {}
+    for col in cols:
+        if click.confirm('Include column {col}: {value} in additional data?'.format(col=col, value=row[col]), default=False):
+            column_name = click.prompt('Name for column')
+            data_cols[column_name] = col
 
 
     # Go back to the top of the file
@@ -96,11 +100,16 @@ def convert(f):
     with click.progressbar(reader, length=countrows, label='Finding locations') as bar:
         for row in bar:
             name = row[name_col]
-            data = {'test': 'data'}
+            data = {}
+
             if address_split:
                 address = row[address1_col] + ', ' + row[address2_col]
             else:
                 address = row[address_col]
+
+            for k, v in data_cols.iteritems():
+                data[k] = row[v]
+
             try:
                 features.append(make_point(name, data, address))
             except ValueError:
@@ -113,7 +122,7 @@ def convert(f):
         for fail in failures:
             click.echo('  ' + fail)
         click.echo('')
-        time.sleep(3)
+        #time.sleep(3)
 
     # create a geojson feature collection
     fc = geojson.FeatureCollection(features)
@@ -124,6 +133,7 @@ def convert(f):
     # write geojson string straight into the index file
     env = Environment(loader=PackageLoader('csv_to_json', 'templates'))
     index = env.get_template('index.html')
+
     with click.open_file('proof_locate/index.html', 'w') as f:
         index.stream(j_geojson=fc, failures=failures).dump(f)
     google = env.get_template('Google.js')

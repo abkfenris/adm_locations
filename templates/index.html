@@ -42,7 +42,7 @@ var baseMaps = {
 }
 
 function popUp(feature, layer) {
-    html = '<b>' + feature.properties.name + '</b><br /><ul>'
+    html = '<b>' + feature.properties.name + '</b><br />' + feature.properties.location + '<ul>'
     for (var key in feature.properties.data) {
         html = html + '<li>' + key + ': ' + feature.properties.data[key] + '</li>'
     }

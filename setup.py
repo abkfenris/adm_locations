@@ -1,7 +1,7 @@
 from setuptools import setup
 
 setup(
-    name='proof_locate',
+    name='csv_locate',
     version='0.1',
     py_modules=['csv_to_json'],
     install_requires=[
@@ -13,6 +13,6 @@ setup(
     ],
     entry_points='''
         [console_scripts]
-        proof_locate=csv_to_json:convert
+        csv_locate=csv_to_json:convert
     ''',
 )
