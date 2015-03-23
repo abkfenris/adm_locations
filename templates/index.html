@@ -6,7 +6,15 @@
     <script src="Google.js"></script>
 </head>
 <body>
-    <div id="map" style="width: 600px; height: 400px; position:relative"></div>
+    <div id="map" style="width: 800px; height: 800px; position:relative"></div>
+    {% if failures|length > 0 %}
+    <p>Failed to retrieve location data for:</p>
+    <ul>
+        {% for failure in failures %}
+        <li>{{ failure }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
     <script>
 
 var map = L.map('map').setView([39.74739, -90], 4);
@@ -34,7 +42,12 @@ var baseMaps = {
 }
 
 function popUp(feature, layer) {
-	layer.bindPopup('<b>' + feature.properties.name + '</b> ' + feature.properties.status + '<br />' + feature.properties.location);
+    html = '<b>' + feature.properties.name + '</b><br /><ul>'
+    for (var key in feature.properties.data) {
+        html = html + '<li>' + key + ': ' + feature.properties.data[key] + '</li>'
+    }
+    html = html + '</ul>'
+	layer.bindPopup(html);
 }
 
 var geojsonFeatures = {{ j_geojson }};
