@@ -4,7 +4,7 @@ adm\_locations
 
 Designed to work with `Proof
 Admissions <http://proofgroup.com/AdmissionsTools>`__ for those who are
-better at spacial things than just reading from a list.
+better at spatial visualization than just reading from a list.
 
 Steps: -
 1. Within Proof adm filter down a set to just the records that you
